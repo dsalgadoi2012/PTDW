@@ -1,0 +1,99 @@
+<h2 class="content-block">Facturar</h2>
+
+
+<div class="content-block dx-card responsive-paddings">
+  <form id="consultaCliente" (submit)="handleSubmit($event, consultaCliente)">
+    <dx-form id="form1"
+             [formData]="consultaCliente"
+             labelLocation="top"
+             [colCountByScreen]="colCountByScreen"
+    >
+      <dxi-item dataField="documento" [isRequired]="true"></dxi-item>
+
+      <dxi-item
+        itemType="button"
+        [buttonOptions]="submitButtonOptions">
+      </dxi-item>
+    </dx-form>
+
+  </form>
+  <div *ngIf="cliente.id">
+    <dx-form id="form"
+             [formData]="cliente"
+             [readOnly]="true"
+             labelLocation="top"
+             [colCountByScreen]="colCountByScreen"
+    >
+    </dx-form>
+    <br>
+    <dx-form id="formProducto"
+             [formData]="nuevoProducto"
+             labelLocation="top"
+             [colCount]="2">
+      <dxi-item
+        dataField="producto"
+        editorType="dxSelectBox"
+        [editorOptions]="{ items: productos, displayExpr: 'nombre',valueExpr: 'id', searchEnabled: true, value: '' }">
+        <dxi-validation-rule
+          type="required"
+          message="Position is required"
+        ></dxi-validation-rule>
+      </dxi-item>
+      <dxi-item
+        dataField="cantidad"
+      ></dxi-item>
+      <dxi-item
+        itemType="button"
+        horizontalAlignment="left"
+        cssClass="add-phone-button"
+        [buttonOptions]="agregarProducto"
+      >
+      </dxi-item>
+
+    </dx-form>
+
+    <dx-data-grid
+      [dataSource]="listaProductosAgregados"
+      keyExpr="producto"
+      [showBorders]="false"
+      [focusedRowEnabled]="true"
+      [focusedRowIndex]="0"
+      [columnAutoWidth]="true"
+      [columnHidingEnabled]="true">
+
+      <dxi-column
+        dataField="nombre"
+        [hidingPriority]="2">
+      </dxi-column>
+      <dxi-column
+        dataField="cantidad"
+        [hidingPriority]="2">
+      </dxi-column>
+      <dxi-column
+        dataField="precio"
+        [hidingPriority]="2">
+      </dxi-column>
+      <dxo-summary>
+        <dxi-total-item
+          column="precio"
+          summaryType="sum">
+        </dxi-total-item>
+
+      </dxo-summary>
+    </dx-data-grid>
+    <dx-button
+      stylingMode="contained"
+      text="Guardar Factura"
+      type="normal"
+      [width]="240"
+      (onClick)="guardarFactura()"
+    >
+    </dx-button>
+
+    <br>
+  </div>
+
+
+</div>
+
+
